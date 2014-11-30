@@ -7,8 +7,11 @@
 	<title> Doge Captions Generator</title>
 </head>
 
-<body>
+<header>
 <h1>Doge Captions Generator</h1><img src='img/dogehead.png'/ width="50">
+</header>
+
+<body>
 <div id='demimputs'>
 First Word: <input type="text" name="firstword" id='firstword' class='caption' ><br>
 Second Word: <input type="text" name="secondword" class='caption' >
@@ -42,6 +45,9 @@ document.getElementById('demimputs').appendChild(oSpan);
  var Mycanvas = document.getElementById('myCanvas');
  var context = Mycanvas.getContext('2d');
  var img = document.createElement("img");
+ context.font="17px Comic Sans Ms";
+context.fillStyle="#000000";
+ context.fillText("Drop an image onto the canvas", 160, 200);
 
 //Drag And Drop
  
@@ -114,10 +120,13 @@ for(var i = 0; captions[i]; i++){
 var rcol = colors[Math.floor(Math.random() * colors.length)];
 
 console.log(rcol);
-context.font="20px Comic Sans Ms";
+context.font="30px Comic Sans Ms";
 context.fillStyle= rcol;
-$randomnumber=Math.floor(Math.random()*myCanvas.width);
-$randomnumber2=Math.floor(Math.random()*myCanvas.height);
+context.strokeStyle = 'black';
+
+$randomnumber=Math.floor(Math.random()*myCanvas.width/2) + (myCanvas.width/5);
+
+$randomnumber2=Math.floor(Math.random()*myCanvas.height/2)+ (myCanvas.height/5);
 //context.fillText(element.value, $randomnumber, $randomnumber2);
     //do something with element
 
@@ -129,13 +138,14 @@ var ty = $randomnumber2 + 5;
 // Translate to near the center to rotate about the center
 context.translate(tx,ty);
 
-var r = Math.floor(Math.random() * 45) + 1;
+var r = Math.floor(Math.random() * 10) + 1;
 // Then rotate...
 context.rotate(r*Math.PI/180);
 // Then translate back to draw in the right place!
 context.translate(-tx,-ty);
     
 context.fillText(element.value, $randomnumber, $randomnumber2);
+context.strokeText(element.value, $randomnumber, $randomnumber2);
 context.restore(); // This will un-translate and un-rotate the canvas
 }
 		

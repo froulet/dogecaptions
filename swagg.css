@@ -33,3 +33,9 @@ button
 {
 	margin:10px;
 }
+
+header
+{
+	background-color: orange;
+	margin-bottom: 20px;
+}
