@@ -1,0 +1,159 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<LINK href="swagg.css" rel="stylesheet" type="text/css">
+	<title> Doge Captions Generator</title>
+</head>
+
+<header>
+<h1>Doge Captions Generator</h1><img src='img/dogehead.png'/ width="50">
+</header>
+
+<body>
+<div id='demimputs'>
+First Word: <input type="text" name="firstword" id='firstword' class='caption' ><br>
+Second Word: <input type="text" name="secondword" class='caption' >
+</div>
+<input type="button" id="more_fields" onclick="add_fields();" value="Add More" /><br>
+<canvas id="myCanvas" width="578" height="400"  style='border-style: solid; border-width: 2px;'>
+Your browser is like really old, dude - no canvas support!
+</canvas>
+
+<div id='main-content'></div>
+</body>
+<footer>
+	By <a href='http://www.frantzroulet.com'>Frantz Roulet</a> - 2014
+</footer>
+</html>
+
+<script>
+function add_fields()
+{
+var input = document.createElement("input");
+input.type = "text";
+input.className = "caption"; // set the CSS class
+
+var oSpan = document.createElement('span');
+oSpan.innerHTML='<br>';
+oSpan.appendChild(input); // put it into the DOM
+
+document.getElementById('demimputs').appendChild(oSpan);
+}
+
+ var Mycanvas = document.getElementById('myCanvas');
+ var context = Mycanvas.getContext('2d');
+ var img = document.createElement("img");
+ context.font="17px Comic Sans Ms";
+context.fillStyle="#000000";
+ context.fillText("Drop an image onto the canvas", 160, 200);
+
+//Drag And Drop
+ 
+			// To enable drag and drop
+			Mycanvas.addEventListener("dragover", function (evt) {
+			evt.preventDefault();
+			}, false);
+			 
+			// Handle dropped image file - only Firefox and Google Chrome
+			Mycanvas.addEventListener("drop", function (evt) {
+			var files = evt.dataTransfer.files;
+			if (files.length > 0) {
+			var file = files[0];
+			if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
+			var reader = new FileReader();
+			// Note: addEventListener doesn't work in Google Chrome for this event
+			reader.onload = function (evt) {
+			img.src = evt.target.result;
+			};
+			reader.readAsDataURL(file);
+			}
+			}
+			evt.preventDefault();
+			}, false);
+			 
+			// Save image
+			var saveImage = document.createElement("button");
+			saveImage.innerHTML = "Save Picture";
+			saveImage.addEventListener("click", function (evt) {
+			window.open(Mycanvas.toDataURL("image/png"));
+			evt.preventDefault();
+			addtogallerie(Mycanvas);
+			}, false);
+
+			document.getElementById("main-content").appendChild(saveImage);
+			
+
+// Ajout des instructions
+
+clearCanvas = function () {
+context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+};
+
+// Chargement de l'image et lancement du dessin    
+img.addEventListener("load", function () {
+	var imageObj = new Image();
+  
+        imageObj.src = img.src;
+
+
+      //On adapte la taille du canvas à la taille de l'image
+
+	myCanvas.width = img.width;
+     myCanvas.height = img.height;
+clearCanvas();
+		
+context.drawImage(img, 0, 0);
+//Gen.controleur.init(40,35, 1, img.src);
+
+
+var colors = ["red", "green", "white", "black"];
+
+//Write Word
+
+var captions = document.getElementsByClassName("caption");
+//console.log(captions);
+for(var i = 0; captions[i]; i++){
+    var element = captions[i];
+    console.log(element);
+var rcol = colors[Math.floor(Math.random() * colors.length)];
+
+console.log(rcol);
+context.font="30px Comic Sans Ms";
+context.fillStyle= rcol;
+context.strokeStyle = 'black';
+
+$randomnumber=Math.floor(Math.random()*myCanvas.width/2) + (myCanvas.width/5);
+
+$randomnumber2=Math.floor(Math.random()*myCanvas.height/2)+ (myCanvas.height/5);
+//context.fillText(element.value, $randomnumber, $randomnumber2);
+    //do something with element
+
+////ROTATE THE TEXT////
+var metric = context.measureText(element.value); 
+var tx = $randomnumber + (metric.width/2);
+var ty = $randomnumber2 + 5;
+
+// Translate to near the center to rotate about the center
+context.translate(tx,ty);
+
+var r = Math.floor(Math.random() * 10) + 1;
+// Then rotate...
+context.rotate(r*Math.PI/180);
+// Then translate back to draw in the right place!
+context.translate(-tx,-ty);
+    
+context.fillText(element.value, $randomnumber, $randomnumber2);
+context.strokeText(element.value, $randomnumber, $randomnumber2);
+context.restore(); // This will un-translate and un-rotate the canvas
+}
+		
+
+
+});
+
+
+
+
+</script>
